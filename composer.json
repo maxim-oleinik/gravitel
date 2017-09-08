@@ -1,0 +1,14 @@
+{
+  "name": "gravitel",
+  "description": "Gravitel API",
+  "version"     : "v0.1",
+  "require": {
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Gravitel\\": "src/"
+    }
+  }
+}
