@@ -57,6 +57,14 @@ class Gravitel
     }
 
 
+    /**
+     * Разобрать ответ в массив
+     *
+     * @param $response
+     * @return array
+     *
+     * @throws \Gravitel\Error
+     */
     private function _parse_response($response)
     {
         if ($this->transport->getHttpCode() >= 500) {

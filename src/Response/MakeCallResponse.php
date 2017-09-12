@@ -1,7 +1,9 @@
 <?php namespace Gravitel\Response;
 
+use Gravitel\DataContainer;
 
-class MakeCallResponse extends BaseResponse
+
+class MakeCallResponse extends DataContainer
 {
     public $uuid;
 }
