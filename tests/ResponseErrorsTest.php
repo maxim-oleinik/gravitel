@@ -46,8 +46,8 @@ class ResponseErrorsTest extends \PHPUnit_Framework_TestCase
         $transport = $this->_make_transport(200, $str = 'not a json');
         $g = new Gravitel($transport, 'url', 'token');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage("Gravitel unexpected response, got ({$str})");
+        $this->expectException(\Gravitel\Error::class);
+        $this->expectExceptionMessage("Gravitel: Unexpected response");
         $g->makeCall('user', 'phone');
     }
 

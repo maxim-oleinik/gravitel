@@ -25,6 +25,8 @@ class MakeCallTest extends \PHPUnit_Framework_TestCase
             ])
             ->willReturn('{"uuid":"' . $uid . '"}');
 
+        $transport->method('getHttpCode')->willReturn(200);
+
         $g = new Gravitel($transport, 'url', 'token');
         $result = $g->makeCall('user', 'phone');
         $this->assertInstanceOf(MakeCallResponse::class, $result);

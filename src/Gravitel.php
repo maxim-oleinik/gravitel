@@ -51,9 +51,9 @@ class Gravitel
             'token' => $this->token,
             'phone' => $phone,
         ];
-        $responce = $this->transport->send($this->url, $data);
+        $response = $this->transport->send($this->url, $data);
 
-        return new MakeCallResponse($this->_parse_response($responce));
+        return new MakeCallResponse($this->_parse_response($response));
     }
 
 
@@ -67,18 +67,29 @@ class Gravitel
      */
     private function _parse_response($response)
     {
-        if ($this->transport->getHttpCode() >= 500) {
-            throw new Error('Ошибка сервера');
-        }
+        do {
+            // Если код ответа не 200 или 400
+            if (!in_array(floor($this->transport->getHttpCode()/100), [2, 4])) {
+                $errorMess = 'Ошибка сервера';
+                break;
+            }
 
-        $data = json_decode($response, true);
-        if (null === $data) {
-            throw new \RuntimeException("Request: {$this->url}\nGravitel unexpected response, got ({$response})");
-        }
-        if (isset($data['error'])) {
-            throw new Error($data['error'], $this->transport->getHttpCode());
-        }
-        return $data;
+            $data = json_decode($response, true);
+            if (null === $data) {
+                $errorMess = 'Unexpected response';
+                break;
+            }
+
+            if (isset($data['error'])) {
+                $errorMess = $data['error'];
+                break;
+            }
+
+            return $data;
+
+        } while (false);
+
+        throw new Error('Gravitel: '.$errorMess, $this->transport->getHttpCode(), $this->transport->getDebugInfo());
     }
 
 }
