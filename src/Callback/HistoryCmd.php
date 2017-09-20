@@ -9,8 +9,11 @@ use Gravitel\DataContainer;
  */
 class HistoryCmd extends DataContainer
 {
+    const TYPE_IN  = 'in';
+    const TYPE_OUT = 'out';
+
     const STATUS_SUCCESS      = 'Success';      // успешный входящий/исходящий звонок
-    const STATUS_missed       = 'missed';       // пропущенный входящий звонок
+    const STATUS_MISSED       = 'missed';       // пропущенный входящий звонок
     const STATUS_BUSY         = 'Busy';         // мы  получили ответ Занято
     const STATUS_NOTAVAILABLE = 'NotAvailable'; // мы получили ответ Абонент недоступен
     const STATUS_NOTALLOWED   = 'NotAllowed';   // мы получили ответ Звонки на это направление  запрещены
