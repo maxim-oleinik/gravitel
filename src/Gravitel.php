@@ -145,7 +145,7 @@ class Gravitel
             }
 
             // Если код 200 и тело пустое
-            if ($this->transport->getHttpCode() == 200 && !$response) {
+            if ($this->transport->getHttpCode() == 200 && (!$response || 'OK' == $response)) {
                 return true;
             }
 

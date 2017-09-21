@@ -21,7 +21,7 @@ class SubscribeOnCallsTest extends \PHPUnit_Framework_TestCase
                 'token'  => 'token',
                 'status' => 'on',
             ])
-            ->willReturn('');
+            ->willReturn('OK');
 
         $g = new Gravitel($transport, 'url', 'token');
         $result = $g->subscribeOnCalls('user', true);
@@ -46,7 +46,7 @@ class SubscribeOnCallsTest extends \PHPUnit_Framework_TestCase
                 'group_id' => $group = 'gravitel-group-id',
                 'status'   => 'off',
             ])
-            ->willReturn('');
+            ->willReturn('OK');
 
         $g = new Gravitel($transport, 'url', 'token');
         $result = $g->subscribeOnCalls('user', false, $group);
