@@ -51,19 +51,18 @@ class Gravitel
      * @throws \Gravitel\Error
      * @param  string $user - Логин оператора
      * @param  string $phone
+     *
      * @return \Gravitel\Response\MakeCallResponse
      */
     public function makeCall($user, $phone)
     {
         $data = [
-            'cmd'   => 'makeCall',
             'user'  => $user,
-            'token' => $this->token,
             'phone' => $phone,
         ];
-        $response = $this->transport->send($this->url, $data);
 
-        return new MakeCallResponse($this->_parse_response($response));
+        $response = $this->_cmd('makeCall', $data);
+        return new MakeCallResponse($response);
     }
 
 
@@ -80,17 +79,14 @@ class Gravitel
     public function subscribeOnCalls($user, $enable, $groupId = null)
     {
         $data = [
-            'cmd'    => 'subscribeoncalls',
             'user'   => $user,
             'status' => $enable ? 'on' : 'off',
-            'token'  => $this->token,
         ];
         if ($groupId) {
             $data['group_id'] = $groupId;
         }
 
-        $response = $this->transport->send($this->url, $data);
-        return $this->_parse_response($response);
+        return $this->_cmd('subscribeoncalls', $data);
     }
 
 
@@ -103,17 +99,31 @@ class Gravitel
      */
     public function groups()
     {
-        $data = [
-            'cmd'    => 'groups',
-            'token'  => $this->token,
-        ];
-
-        $response = $this->transport->send($this->url, $data);
+        $response = $this->_cmd('groups');
         $groups = [];
-        foreach ($this->_parse_response($response) as $groupData) {
+        foreach ($response as $groupData) {
             $groups[] = new Group($groupData);
         }
         return $groups;
+    }
+
+
+    /**
+     * Run API command
+     *
+     * @param  string $cmdName
+     * @param  array $data
+     *
+     * @return array|true
+     * @throws \Gravitel\Error
+     */
+    private function _cmd($cmdName, array $data = [])
+    {
+        $data['cmd']   = $cmdName;
+        $data['token'] = $this->token;
+
+        $response = $this->transport->send($this->url, $data);
+        return $this->_parse_response($response);
     }
 
 
@@ -122,7 +132,7 @@ class Gravitel
      *
      * @param $response
      *
-     * @return array|bool
+     * @return array|true
      * @throws \Gravitel\Error
      */
     private function _parse_response($response)
