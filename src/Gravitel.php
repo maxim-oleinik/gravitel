@@ -3,6 +3,11 @@
 use Gravitel\Response\MakeCallResponse;
 
 
+/**
+ * @see \Gravitel\Test\ResponseErrorsTest
+ * @see \Gravitel\Test\MakeCallTest
+ * @see \Gravitel\Test\SubscribeOnCallsTest
+ */
 class Gravitel
 {
     /**
@@ -37,11 +42,14 @@ class Gravitel
 
 
     /**
-     * @throws \Gravitel\Error
-     * @param $user
-     * @param $phone
-     * @return \Gravitel\Response\MakeCallResponse
+     * Инициировть звонок
      *
+     * @see \Gravitel\Test\MakeCallTest
+     *
+     * @throws \Gravitel\Error
+     * @param  string $user - Логин оператора
+     * @param  string $phone
+     * @return \Gravitel\Response\MakeCallResponse
      */
     public function makeCall($user, $phone)
     {
@@ -58,11 +66,38 @@ class Gravitel
 
 
     /**
+     * Включить или выключить прием звонков сотрудником во всех его отделах
+     *
+     * @see \Gravitel\Test\SubscribeOnCallsTest
+     *
+     * @param string $user    - Логин оператора
+     * @param bool   $enable  - Вкл/выкл
+     * @param string $groupId - Изменить состояние только в указанной группе
+     * @return bool
+     */
+    public function subscribeOnCalls($user, $enable, $groupId = null)
+    {
+        $data = [
+            'cmd'    => 'subscribeoncalls',
+            'user'   => $user,
+            'status' => $enable ? 'on' : 'off',
+            'token'  => $this->token,
+        ];
+        if ($groupId) {
+            $data['group_id'] = $groupId;
+        }
+
+        $response = $this->transport->send($this->url, $data);
+        return $this->_parse_response($response);
+    }
+
+
+    /**
      * Разобрать ответ в массив
      *
      * @param $response
-     * @return array
      *
+     * @return array|bool
      * @throws \Gravitel\Error
      */
     private function _parse_response($response)
@@ -72,6 +107,11 @@ class Gravitel
             if (!in_array(floor($this->transport->getHttpCode()/100), [2, 4])) {
                 $errorMess = 'Ошибка сервера';
                 break;
+            }
+
+            // Если код 200 и тело пустое
+            if ($this->transport->getHttpCode() == 200 && !$response) {
+                return true;
             }
 
             $data = json_decode($response, true);
