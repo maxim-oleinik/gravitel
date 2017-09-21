@@ -1,5 +1,6 @@
 <?php namespace Gravitel;
 
+use Gravitel\Response\Group;
 use Gravitel\Response\MakeCallResponse;
 
 
@@ -7,6 +8,7 @@ use Gravitel\Response\MakeCallResponse;
  * @see \Gravitel\Test\ResponseErrorsTest
  * @see \Gravitel\Test\MakeCallTest
  * @see \Gravitel\Test\SubscribeOnCallsTest
+ * @see \Gravitel\Test\CmdGroupsTest
  */
 class Gravitel
 {
@@ -89,6 +91,29 @@ class Gravitel
 
         $response = $this->transport->send($this->url, $data);
         return $this->_parse_response($response);
+    }
+
+
+    /**
+     * Получить список групп
+     *
+     * @see \Gravitel\Test\CmdGroupsTest
+     *
+     * @return Group[]
+     */
+    public function groups()
+    {
+        $data = [
+            'cmd'    => 'groups',
+            'token'  => $this->token,
+        ];
+
+        $response = $this->transport->send($this->url, $data);
+        $groups = [];
+        foreach ($this->_parse_response($response) as $groupData) {
+            $groups[] = new Group($groupData);
+        }
+        return $groups;
     }
 
 
