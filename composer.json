@@ -1,11 +1,21 @@
 {
-  "name": "gravitel",
-  "description": "Gravitel API",
-  "version"     : "v0.1",
+  "name": "maxim-oleinik/gravitel",
+  "description": "PHP client for Gravitel API",
+  "type": "library",
+  "license": "MIT",
+  "authors": [{
+    "name": "Maxim Oleinik",
+    "email": "maxim.oleinik@gmail.com"
+  }],
+
   "require": {
+    "ext-json": "*"
   },
+
   "require-dev": {
+    "phpunit/phpunit": "5.*"
   },
+
   "autoload": {
     "psr-4": {
       "Gravitel\\": "src/"
