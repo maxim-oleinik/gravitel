@@ -3,27 +3,16 @@ Gravitel API wrapper
 
 **doc version:** 2017-08
 
+
 Install
 -------
-1. Add to composer.json
-```
-    {
-      "require": {
-        "gravitel": "dev-master",
-      },
-      "repositories": {
-        "gravitel": {
-          "type": "git",
-          "url": "https://github.com/maxim-oleinik/gravitel.git"
-        },
-      },
-    }
-```
+1. Add to `composer`
+
+        composer require maxim-oleinik/gravitel
 
 2. Implement \Gravitel\TransportInterface
-```
-    class MyHttpTransport implements \Gravitel\TransportInterface
-```
+
+        class MyHttpTransport implements \Gravitel\TransportInterface
 
 
 Send Command
