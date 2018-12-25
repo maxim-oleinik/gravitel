@@ -51,7 +51,7 @@ class Gravitel
      * @param  string $phone    - Номер телефона куда звоним
      * @param  string $phoneExt - Номер исходящего телефона для АОН
      *
-     * @return \Gravitel\Response\MakeCallResponse
+     * @return string - UUID звонка
      * @throws \Gravitel\Error
      */
     public function makeCall($user, $phone, $phoneExt = null)
@@ -64,8 +64,7 @@ class Gravitel
             $data['clid'] = $phoneExt;
         }
 
-        $response = $this->_cmd('makeCall', $data);
-        return new MakeCallResponse($response);
+        return (new MakeCallResponse($this->_cmd('makeCall', $data)))->uuid;
     }
 
 

@@ -1,7 +1,6 @@
 <?php namespace Gravitel\Test;
 
 use Gravitel\Gravitel;
-use Gravitel\Response\MakeCallResponse;
 
 /**
  * @see \Gravitel\Gravitel
@@ -29,7 +28,6 @@ class MakeCallTest extends \PHPUnit_Framework_TestCase
 
         $g = new Gravitel($transport, 'url', 'token');
         $result = $g->makeCall('user', 'phone', 'phoneExt');
-        $this->assertInstanceOf(MakeCallResponse::class, $result);
-        $this->assertEquals($uid, $result->uuid);
+        $this->assertSame($uid, $result);
     }
 }
