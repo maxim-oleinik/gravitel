@@ -21,13 +21,14 @@ class MakeCallTest extends \PHPUnit_Framework_TestCase
                 'user'  => 'user',
                 'token' => 'token',
                 'phone' => 'phone',
+                'clid'  => 'phoneExt',
             ])
             ->willReturn('{"uuid":"' . $uid . '"}');
 
         $transport->method('getHttpCode')->willReturn(200);
 
         $g = new Gravitel($transport, 'url', 'token');
-        $result = $g->makeCall('user', 'phone');
+        $result = $g->makeCall('user', 'phone', 'phoneExt');
         $this->assertInstanceOf(MakeCallResponse::class, $result);
         $this->assertEquals($uid, $result->uuid);
     }

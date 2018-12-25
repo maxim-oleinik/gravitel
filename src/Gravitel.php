@@ -47,18 +47,22 @@ class Gravitel
      *
      * @see \Gravitel\Test\MakeCallTest
      *
-     * @throws \Gravitel\Error
-     * @param  string $user - Логин оператора
-     * @param  string $phone
+     * @param  string $user     - Логин оператора
+     * @param  string $phone    - Номер телефона куда звоним
+     * @param  string $phoneExt - Номер исходящего телефона для АОН
      *
      * @return \Gravitel\Response\MakeCallResponse
+     * @throws \Gravitel\Error
      */
-    public function makeCall($user, $phone)
+    public function makeCall($user, $phone, $phoneExt = null)
     {
         $data = [
             'user'  => $user,
             'phone' => $phone,
         ];
+        if ($phoneExt) {
+            $data['clid'] = $phoneExt;
+        }
 
         $response = $this->_cmd('makeCall', $data);
         return new MakeCallResponse($response);

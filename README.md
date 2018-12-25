@@ -28,22 +28,34 @@ Install
 
 Send Command
 ------------
-**Список исходящих команд**
-* `\Gravitel\Gravitel::makeCall($user, $phone): \Gravitel\Response\MakeCallResponse`  
-    Инициировать звонок
-* `\Gravitel\Gravitel::groups(): \Gravitel\Response\Group[]`  
-    Получить список групп
-* `\Gravitel\Gravitel::subscribeOnCalls($user, $enable, $groupId = null)`  
-    Включить или выключить прием звонков сотрудником во всех его отделах
+
+#### Список исходящих команд
+
+* Инициировать звонок
+
+        /**
+         * @param  string $user     - Логин оператора
+         * @param  string $phone    - Номер телефона куда звоним
+         * @param  string $phoneExt - Номер исходящего телефона для АОН
+         */
+        \Gravitel\Gravitel::makeCall($user, $phone, $phoneExt = null): \Gravitel\Response\MakeCallResponse`
+
+* Получить список групп
+
+        \Gravitel\Gravitel::groups(): \Gravitel\Response\Group[]
+
+* Включить или выключить прием звонков сотрудником во всех его отделах
+
+        \Gravitel\Gravitel::subscribeOnCalls($user, $enable, $groupId = null)
 
 
-**Вызов и обработка ошибок**
+#### Вызов и обработка ошибок
 ```
     $gravitel = new Gravitel(new MyHttpTransport, $gravitelApiUrl, $gravitelApiToken);
     try {
         $response = $gravitel->makeCall($login, $phone);
     } catch (\Gravitel\Error $e) {
-        $e->getCode(); // 200, 400, 401, 500
+        $e->getCode(); // 400, 401, 500
         $e->getMessage();
         $e->getDebugInfo();
     }
