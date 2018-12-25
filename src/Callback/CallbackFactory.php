@@ -1,13 +1,12 @@
 <?php namespace Gravitel\Callback;
 
-
 /**
  * @see \Gravitel\Test\CallbackFactoryTest
  */
 class CallbackFactory
 {
     /**
-     * @param array $input
+     * @param  array $input
      * @return mixed
      */
     public static function make(array $input)
@@ -30,5 +29,4 @@ class CallbackFactory
                 throw new \InvalidArgumentException(__METHOD__.": Unknown CMD value `{$input['cmd']}`");
         }
     }
-
 }

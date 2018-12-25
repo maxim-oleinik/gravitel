@@ -3,7 +3,6 @@
 use Gravitel\Response\Group;
 use Gravitel\Response\MakeCallResponse;
 
-
 /**
  * @see \Gravitel\Test\ResponseErrorsTest
  * @see \Gravitel\Test\MakeCallTest
@@ -32,8 +31,8 @@ class Gravitel
      * Конструктор
      *
      * @param TransportInterface $transport
-     * @param  string            $url
-     * @param  string            $token
+     * @param string             $url
+     * @param string             $token
      */
     public function __construct(TransportInterface $transport, $url, $token)
     {
@@ -71,10 +70,12 @@ class Gravitel
      *
      * @see \Gravitel\Test\SubscribeOnCallsTest
      *
-     * @param string $user    - Логин оператора
-     * @param bool   $enable  - Вкл/выкл
-     * @param string $groupId - Изменить состояние только в указанной группе
+     * @param  string $user    - Логин оператора
+     * @param  bool   $enable  - Вкл/выкл
+     * @param  string $groupId - Изменить состояние только в указанной группе
+     *
      * @return bool
+     * @throws \Gravitel\Error
      */
     public function subscribeOnCalls($user, $enable, $groupId = null)
     {
@@ -96,6 +97,7 @@ class Gravitel
      * @see \Gravitel\Test\CmdGroupsTest
      *
      * @return Group[]
+     * @throws \Gravitel\Error
      */
     public function groups()
     {
@@ -111,8 +113,8 @@ class Gravitel
     /**
      * Run API command
      *
-     * @param  string $cmdName
-     * @param  array $data
+     * @param string $cmdName
+     * @param array  $data
      *
      * @return array|true
      * @throws \Gravitel\Error
@@ -123,23 +125,23 @@ class Gravitel
         $data['token'] = $this->token;
 
         $response = $this->transport->send($this->url, $data);
-        return $this->_parse_response($response);
+        return $this->_parseResponse($response);
     }
 
 
     /**
      * Разобрать ответ в массив
      *
-     * @param $response
+     * @param string $response
      *
      * @return array|true
      * @throws \Gravitel\Error
      */
-    private function _parse_response($response)
+    private function _parseResponse($response)
     {
         do {
             // Если код ответа не 200 или 400
-            if (!in_array(floor($this->transport->getHttpCode()/100), [2, 4])) {
+            if (!\in_array(\floor($this->transport->getHttpCode()/100), [2, 4])) {
                 $errorMess = 'Ошибка сервера';
                 break;
             }
@@ -149,7 +151,7 @@ class Gravitel
                 return true;
             }
 
-            $data = json_decode($response, true);
+            $data = \json_decode($response, true);
             if (null === $data) {
                 $errorMess = 'Unexpected response';
                 break;
@@ -166,5 +168,4 @@ class Gravitel
 
         throw new Error('Gravitel: '.$errorMess, $this->transport->getHttpCode(), $this->transport->getDebugInfo());
     }
-
 }

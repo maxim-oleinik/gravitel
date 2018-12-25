@@ -2,7 +2,6 @@
 
 use Gravitel\DataContainer;
 
-
 class Group extends DataContainer
 {
     public $id;

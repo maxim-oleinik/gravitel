@@ -2,7 +2,6 @@
 
 use Gravitel\Gravitel;
 
-
 /**
  * @see \Gravitel\Gravitel
  */
@@ -87,5 +86,4 @@ class ResponseErrorsTest extends \PHPUnit_Framework_TestCase
 
         return $transport;
     }
-
 }

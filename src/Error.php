@@ -1,6 +1,5 @@
 <?php namespace Gravitel;
 
-
 class Error extends \Exception
 {
     private $debugInfo;
@@ -26,5 +25,4 @@ class Error extends \Exception
     {
         return $this->debugInfo;
     }
-
 }

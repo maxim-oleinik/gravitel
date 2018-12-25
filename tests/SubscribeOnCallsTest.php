@@ -2,7 +2,6 @@
 
 use Gravitel\Gravitel;
 
-
 /**
  * @see \Gravitel\Gravitel
  */
@@ -52,5 +51,4 @@ class SubscribeOnCallsTest extends \PHPUnit_Framework_TestCase
         $result = $g->subscribeOnCalls('user', false, $group);
         $this->assertTrue($result);
     }
-
 }

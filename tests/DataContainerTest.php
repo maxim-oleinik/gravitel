@@ -2,7 +2,6 @@
 
 use Gravitel\DataContainer;
 
-
 class DataContainerTestModel extends DataContainer
 {
     public $code;
@@ -43,5 +42,4 @@ class DataContainerTest extends \PHPUnit_Framework_TestCase
             'unknown_attr' => 1,
         ]);
     }
-
 }

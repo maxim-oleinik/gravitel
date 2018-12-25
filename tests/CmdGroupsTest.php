@@ -3,7 +3,6 @@
 use Gravitel\Gravitel;
 use Gravitel\Response\Group;
 
-
 /**
  * @see \Gravitel\Gravitel
  */
@@ -35,5 +34,4 @@ class CmdGroupsTest extends \PHPUnit_Framework_TestCase
             new Group($g3),
         ], $result);
     }
-
 }

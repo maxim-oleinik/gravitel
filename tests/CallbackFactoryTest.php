@@ -5,7 +5,6 @@ use Gravitel\Callback\ContactCmd;
 use Gravitel\Callback\EventCmd;
 use Gravitel\Callback\HistoryCmd;
 
-
 /**
  * @see \Gravitel\Callback\CallbackFactory
  */
@@ -96,5 +95,4 @@ class CallbackFactoryTest extends \PHPUnit_Framework_TestCase
         $this->expectException(\InvalidArgumentException::class);
         CallbackFactory::make([]);
     }
-
 }

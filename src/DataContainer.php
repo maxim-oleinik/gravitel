@@ -1,6 +1,5 @@
 <?php namespace Gravitel;
 
-
 /**
  * @see \Gravitel\Test\DataContainerTest
  */
@@ -36,5 +35,4 @@ class DataContainer
     {
         return (array)$this;
     }
-
 }
