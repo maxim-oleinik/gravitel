@@ -1,6 +1,8 @@
 Gravitel API wrapper
 ====================
 
+[![Latest Stable Version](https://poser.pugx.org/maxim-oleinik/gravitel/v/stable)](https://packagist.org/packages/maxim-oleinik/gravitel)
+
 **doc version:** 2017-08
 
 
